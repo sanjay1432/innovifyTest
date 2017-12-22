@@ -4,8 +4,19 @@ const path = require('path');
 const http = require('http');
 const app = express();
 
+var bluebird = require('bluebird')
+// Connect
+var mongoose = require('mongoose')
+
+mongoose.Promise = bluebird
+mongoose.connect('mongodb://127.0.0.1:27017/innovify', { useMongoClient: true})
+.then(()=> { console.log(`Succesfully Connected to the
+Mongodb Database  at URL : mongodb://127.0.0.1:27017/innovify`)})
+.catch(()=> { console.log(`Error Connecting to the Mongodb 
+Database at URL : mongodb://127.0.0.1:27017/innovify`)})
+
 // API file for interacting with MongoDB
-const api = require('./server/routes/api');
+const users = require('./server/routes/users');
 
 // Parsers
 app.use(bodyParser.json());
@@ -15,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // API location
-app.use('/api', api);
+app.use('/users', users);
 
 // Send all other requests to the Angular app
 app.get('*', (req, res) => {
