@@ -11,10 +11,11 @@ export class DataService {
 
   constructor(private _http: Http) { }
 
-  // getUsers() {
-  //   return this._http.get("/users/users")
-  //     .map(result => this.result = result.json());
-  // }
+  getUsers(data) {
+    console.log(data)
+    return this._http.post("/users/log",data)
+      .map(result => this.result = result.json(), console.log(this.result));
+  }
 
    saveUser(data){
        console.log(data)

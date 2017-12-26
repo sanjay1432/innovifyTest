@@ -11,3 +11,20 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+
+  <form [formGroup]="heroForm" novalidate (ngSubmit)="onLog(heroForm)">
+    <div class="form-group">
+      <label class="center-block">Username:
+        <input class="form-control" formControlName="username">
+      </label>
+      <label class="center-block">Password:
+        <input class="form-control"  type="password" formControlName="password">
+      </label>
+
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+
+  <div *ngIf = 'isLogin'>
+    {{user.username}}
+  </div>
