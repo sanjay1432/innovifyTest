@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http');
 const app = express();
-var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('./config'); 
 var bluebird = require('bluebird')
 // Connect
@@ -12,12 +11,12 @@ var mongoose = require('mongoose')
 mongoose.Promise = bluebird
 mongoose.connect(config.database, { useMongoClient: true})
 .then(()=> { console.log(`Succesfully Connected to the
-Mongodb Database  at URL : mongodb://127.0.0.1:27017/innovify`)})
+Mongodb Database  at URL : mongodb://127.0.0.1:27017/nextTest`)})
 .catch(()=> { console.log(`Error Connecting to the Mongodb 
-Database at URL : mongodb://127.0.0.1:27017/innovify`)})
-app.set('superSecret', config.secret); // secret variable
+Database at URL : mongodb://127.0.0.1:27017/nextTest`)})
+
 // API file for interacting with MongoDB
-const users = require('./server/routes/users');
+const checkout = require('./server/routes/checkout');
 
 // Parsers
 app.use(bodyParser.json());
@@ -27,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // API location
-app.use('/users', users);
+app.use('/checkout', checkout);
 
 // Send all other requests to the Angular app
 app.get('*', (req, res) => {

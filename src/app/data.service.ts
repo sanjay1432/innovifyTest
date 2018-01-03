@@ -17,6 +17,10 @@ export class DataService {
       .map(result => this.result = result.json(), console.log(this.result));
   }
 
+  getCards() {
+    return this._http.get("/checkout/card")
+      .map(result => this.result = result.json(), console.log(this.result));
+  }
    saveUser(data){
        console.log(data)
     return this._http.post("/users/",data)
@@ -24,4 +28,10 @@ export class DataService {
       error=>   console.log(error));
    }
 
+   savecard(data){
+      console.log(data)
+  return this._http.post("/checkout/card",data)
+      .map(result => this.result = result.json(),
+    error=>   console.log(error));
+  }
 }

@@ -8,35 +8,39 @@ import { DataService } from './data.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  isLogin: boolean = false;
+  addedCards: any;
   user: any;
   title = 'app';
+  cards = ['visa','master'];
   // Define a users property to hold our user data
   users:any;
   
-  heroForm = new FormGroup ({
-    username: new FormControl(),
-    password: new FormControl()
+  checkoutForm = new FormGroup ({
+    name: new FormControl(),
+    cards: new FormControl()
+  });
+
+  cardForm = new FormGroup ({
+    cardName: new FormControl()
   });
   // Create an instance of the DataService through dependency injection
   constructor(private _dataService: DataService) {
-
-    // Access the Data Service's getUsers() method we defined
-    // this._dataService.getUsers()
-    //     .subscribe(res => this.users = res);
-    // if(this.user.length!= 0){
-    //   this.isLogin = true;
-    // }
+    this.getCards();
+  }
+  getCards(): void {
+    this._dataService.getCards()
+      .subscribe(cards =>{ 
+           this.addedCards = cards
+           console.log(cards)
+      });
   }
 
-  onReg(form):void{
-    console.log(form);
-    this._dataService.saveUser(form.value)
-          .subscribe(res=> console.log(res))
+  onSave(form):void{
+
   }
-  onLog(form):void{
+  onCardSave(form):void{
     console.log(form);
-    this._dataService.getUsers(form.value)
-          .subscribe(res=>  console.log(res))
+    this._dataService.savecard(form.value)
+          .subscribe(res=>  this.getCards())
   }
 }
